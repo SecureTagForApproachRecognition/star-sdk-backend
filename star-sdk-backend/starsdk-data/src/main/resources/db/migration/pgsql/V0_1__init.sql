@@ -11,3 +11,13 @@ WITH (autovacuum_enabled=true);
 ALTER TABLE "t_exposed" ADD CONSTRAINT "PK_t_exposed" PRIMARY KEY ("pk_exposed_id");
 
 ALTER TABLE "t_exposed" ADD CONSTRAINT "key" UNIQUE ("key");
+
+
+CREATE TABLE t_redeem_code(
+ "pk_redeem_code" VARCHAR(10) NOT NULL,
+ "is_used" Boolean Default False NOT NULL
+);
+
+-- Add keys for table t_redeem_code
+
+ALTER TABLE "t_redeem_code" ADD CONSTRAINT "PK_t_redeem_code" PRIMARY KEY ("pk_redeem_code");

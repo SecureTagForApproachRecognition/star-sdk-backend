@@ -74,12 +74,6 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
         </dependency>
-        <!-- Sentry logging -->
-        <dependency>
-            <groupId>io.sentry</groupId>
-            <artifactId>sentry-logback</artifactId>
-            <version>1.7.27</version>
-        </dependency>
     </dependencies>
 
     <dependencyManagement>

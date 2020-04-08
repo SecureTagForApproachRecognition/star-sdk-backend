@@ -3,6 +3,7 @@ package ch.ubique.starsdk.model;
 import javax.validation.constraints.NotNull;
 
 public class Application {
+
 	@NotNull
 	private String appId;
 	@NotNull
@@ -63,4 +64,5 @@ public class Application {
 	public void setContact(String contact) {
 		this.contact = contact;
 	}
+
 }

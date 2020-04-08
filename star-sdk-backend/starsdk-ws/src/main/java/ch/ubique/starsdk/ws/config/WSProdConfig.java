@@ -45,11 +45,6 @@ public class WSProdConfig extends WSBaseConfig {
 	@Value("${datasource.connectionTimeout}")
 	String dataSourceConnectionTimeout;
 
-	@Value("${blobstorage.connectionString}")
-	String storageConnectionString;
-	@Value("${blobstorage.container}")
-	String blobContainer;
-
 	@Bean(destroyMethod = "close")
 	public DataSource dataSource() {
 		HikariConfig config = new HikariConfig();

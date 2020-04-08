@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ch.ubique.starsdk.data.STARDataService;
 import ch.ubique.starsdk.model.ExposedOverview;
 import ch.ubique.starsdk.model.Exposee;
+import ch.ubique.starsdk.model.ExposeeAuthData;
 import ch.ubique.starsdk.model.ExposeeRequest;
 
 @Controller
@@ -52,10 +53,14 @@ public class STARController {
 	public @ResponseBody ResponseEntity<String> addExposee(@Valid @RequestBody ExposeeRequest exposeeRequest,
 			@RequestHeader(value = "User-Agent", required = true) String userAgent) {
 		if (isValidBase64(exposeeRequest.getKey())) {
-			Exposee exposee = new Exposee();
-			exposee.setKey(exposeeRequest.getKey());
-			dataService.upsertExposee(exposee, appSource);
-			return ResponseEntity.ok().build();
+			if (isValiExposeeRequestAuth(exposeeRequest.getAuthData())) {
+				Exposee exposee = new Exposee();
+				exposee.setKey(exposeeRequest.getKey());
+				dataService.upsertExposee(exposee, appSource);
+				return ResponseEntity.ok().build();
+			} else {
+				return new ResponseEntity<String>("No valid auth data", HttpStatus.BAD_REQUEST);
+			}
 		} else {
 			return new ResponseEntity<String>("No valid base64 key", HttpStatus.BAD_REQUEST);
 		}
@@ -74,6 +79,17 @@ public class STARController {
 			Base64.getDecoder().decode(value);
 			return true;
 		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	private boolean isValiExposeeRequestAuth(ExposeeAuthData authData) {
+		switch (authData.getMethod()) {
+		case NONE:
+			return true;
+		case REDEEM_CODE:
+			return dataService.validateRedeemCode(authData.getValue());
+		default:
 			return false;
 		}
 	}

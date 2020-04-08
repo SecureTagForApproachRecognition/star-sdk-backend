@@ -23,4 +23,13 @@ public interface STARDataService {
 	 * @return
 	 */
 	List<Exposee> getExposedForDay(DateTime day);
+
+	/**
+	 * Validates the given redeem code. If valid and not used, return true and set
+	 * code to used. Else return false.
+	 * 
+	 * @param code
+	 * @return
+	 */
+	boolean validateRedeemCode(String code);
 }

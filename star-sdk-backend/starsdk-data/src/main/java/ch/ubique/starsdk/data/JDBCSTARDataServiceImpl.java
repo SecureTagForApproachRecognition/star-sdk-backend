@@ -31,13 +31,13 @@ public class JDBCSTARDataServiceImpl implements STARDataService {
 	public void upsertExposee(Exposee exposee, String appSource) {
 		String sql = null;
 		if (dbType.equals(PGSQL)) {
-			sql = "insert into t_exposed (key, app_source) values (:key, :app_source)" +
-					" on conflict on constraint key do nothing";
+			sql = "insert into t_exposed (key, app_source) values (:key, :app_source)"
+					+ " on conflict on constraint key do nothing";
 		} else {
-			sql = "merge into t_exposed using (values(cast(:key as varchar(10000)), cast(:app_source as varchar(50))))" +
-					 " as vals(key, app_source) on t_exposed.key = vals.key" +
-					 " when matched then update set t_exposed.key = vals.key, t_exposed.app_source = vals.app_source" +
-					 " when not matched then insert (key, app_source) values (vals.key, vals.app_source)";
+			sql = "merge into t_exposed using (values(cast(:key as varchar(10000)), cast(:app_source as varchar(50))))"
+					+ " as vals(key, app_source) on t_exposed.key = vals.key"
+					+ " when matched then update set t_exposed.key = vals.key, t_exposed.app_source = vals.app_source"
+					+ " when not matched then insert (key, app_source) values (vals.key, vals.app_source)";
 		}
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("key", exposee.getKey());
@@ -54,5 +54,20 @@ public class JDBCSTARDataServiceImpl implements STARDataService {
 		params.addValue("dayMidnight", dayMidnight.toDate());
 		params.addValue("nextDayMidnight", dayMidnight.plusDays(1).toDate());
 		return jt.query(sql, params, new ExposeeRowMapper());
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public boolean validateRedeemCode(String code) {
+		Integer count = jt.queryForObject(
+				"select count(*) from t_redeem_code where pk_redeem_code = :redeemCode and is_used = False",
+				new MapSqlParameterSource("redeemCode", code), Integer.class);
+		if (count != null && count == 1) {
+			jt.update("update t_redeem_code set is_used = True where pk_redeem_code = :redeemCode",
+					new MapSqlParameterSource("redeemCode", code));
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
