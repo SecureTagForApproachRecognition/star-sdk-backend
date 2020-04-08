@@ -62,7 +62,7 @@ components:
         authData:
           type: string
           description: Base64 encoded binary data
-        algorithm:
+        method:
           type: string
           description: identifier for the algorithm used
     ch.ubique.starsdk.model.ExposeeRequest:
