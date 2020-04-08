@@ -1,14 +1,20 @@
 package ch.ubique.starsdk.ws.controller;
 
 import java.util.Base64;
+import java.util.List;
 
 import javax.validation.Valid;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ch.ubique.starsdk.data.STARDataService;
-import ch.ubique.starsdk.model.ExposedAction;
+import ch.ubique.starsdk.model.ExposedOverview;
 import ch.ubique.starsdk.model.Exposee;
 import ch.ubique.starsdk.model.ExposeeRequest;
 
@@ -24,9 +30,13 @@ import ch.ubique.starsdk.model.ExposeeRequest;
 @RequestMapping("/v1")
 public class STARController {
 
-	private static final Logger logger = LoggerFactory.getLogger(STARController.class);
 	private final STARDataService dataService;
 	private final String appSource;
+
+	private static final DateTimeFormatter DAY_DATE_FORMATTER = DateTimeFormat.forPattern("yyyyMMdd")
+			.withZone(DateTimeZone.UTC);
+
+	private static final Logger logger = LoggerFactory.getLogger(STARController.class);
 
 	public STARController(STARDataService dataService, String appSource) {
 		this.dataService = dataService;
@@ -35,7 +45,7 @@ public class STARController {
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public @ResponseBody String hello() {
-		return "Hello from Ubique STAR SDK WS";
+		return "Hello from STAR SDK WS";
 	}
 
 	@RequestMapping(value = "/exposed", method = RequestMethod.POST)
@@ -44,28 +54,19 @@ public class STARController {
 		if (isValidBase64(exposeeRequest.getKey())) {
 			Exposee exposee = new Exposee();
 			exposee.setKey(exposeeRequest.getKey());
-			exposee.setUserAgent(userAgent);
-			exposee.setAction(ExposedAction.ADD);
 			dataService.upsertExposee(exposee, appSource);
-			return new ResponseEntity<>(HttpStatus.OK);
+			return ResponseEntity.ok().build();
 		} else {
 			return new ResponseEntity<String>("No valid base64 key", HttpStatus.BAD_REQUEST);
 		}
 	}
 
-	@RequestMapping(value = "/removeexposed", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<String> removeExposee(@Valid @RequestBody ExposeeRequest exposeeRequest,
-			@RequestHeader(value = "User-Agent", required = true) String userAgent) {
-		if (isValidBase64(exposeeRequest.getKey())) {
-			Exposee exposee = new Exposee();
-			exposee.setKey(exposeeRequest.getKey());
-			exposee.setUserAgent(userAgent);
-			exposee.setAction(ExposedAction.REMOVE);
-			dataService.upsertExposee(exposee, appSource);
-			return new ResponseEntity<>(HttpStatus.OK);
-		} else {
-			return new ResponseEntity<String>("No valid base64 key", HttpStatus.BAD_REQUEST);
-		}
+	@RequestMapping(value = "/exposed/{dayDateStr}")
+	public @ResponseBody ResponseEntity<ExposedOverview> getExposed(@PathVariable String dayDateStr) {
+		DateTime dayDate = DAY_DATE_FORMATTER.parseDateTime(dayDateStr);
+		List<Exposee> exposeeList = dataService.getExposedForDay(dayDate);
+		ExposedOverview overview = new ExposedOverview(exposeeList);
+		return ResponseEntity.ok(overview);
 	}
 
 	private boolean isValidBase64(String value) {

@@ -1,15 +1,16 @@
 package ch.ubique.starsdk.data;
 
+import java.util.List;
+
 import org.joda.time.DateTime;
 
 import ch.ubique.starsdk.model.Exposee;
 
-import java.util.List;
-
 public interface STARDataService {
 
 	/**
-	 * upserts the given exposee
+	 * Upserts the given exposee
+	 * 
 	 * @param exposee
 	 * @param appSource
 	 */
@@ -17,6 +18,7 @@ public interface STARDataService {
 
 	/**
 	 * returns all exposees for the given day [day: 00:00, day+1: 00:00)
+	 * 
 	 * @param day
 	 * @return
 	 */

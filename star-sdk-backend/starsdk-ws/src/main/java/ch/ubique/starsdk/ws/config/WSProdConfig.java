@@ -1,7 +1,5 @@
 package ch.ubique.starsdk.ws.config;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -11,16 +9,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
-import com.microsoft.azure.storage.CloudStorageAccount;
-import com.microsoft.azure.storage.blob.CloudBlobClient;
-import com.microsoft.azure.storage.blob.CloudBlobContainer;
-import com.microsoft.azure.storage.blob.CloudBlobDirectory;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-
-import ch.ubique.starsdk.data.output.AzureBlobOutputHandler;
-import ch.ubique.starsdk.data.output.OutputHandler;
 
 @Configuration
 @Profile("prod")
@@ -77,12 +69,8 @@ public class WSProdConfig extends WSBaseConfig {
 	@Bean
 	@Override
 	public Flyway flyway() {
-		Flyway flyWay = Flyway.configure()
-				.dataSource(dataSource())
-				.locations("classpath:/db/migration/pgsql")
-				.baselineOnMigrate(false)
-				.validateOnMigrate(false)
-				.load();
+		Flyway flyWay = Flyway.configure().dataSource(dataSource()).locations("classpath:/db/migration/pgsql")
+				.baselineOnMigrate(false).validateOnMigrate(false).load();
 		flyWay.migrate();
 		return flyWay;
 	}
@@ -92,29 +80,9 @@ public class WSProdConfig extends WSBaseConfig {
 		return "pgsql";
 	}
 
-	@Bean
 	@Override
-	public List<OutputHandler> outputHandlerList() {
-		return Collections.singletonList(azureBlobOutputHandler());
-	}
-	@Bean
-	public CloudBlobDirectory cloudBlobDirectory() {
-		try {
-			CloudStorageAccount storageAccount = CloudStorageAccount.parse(storageConnectionString);
-			CloudBlobClient blobClient = storageAccount.createCloudBlobClient();
-			CloudBlobContainer container = blobClient.getContainerReference(blobContainer);
-
-			// Create the container if it does not exist.
-			container.createIfNotExists();
-			CloudBlobDirectory directory = container.getDirectoryReference("");
-			return directory;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+		
 	}
 
-	@Bean
-	public OutputHandler azureBlobOutputHandler() {
-		return new AzureBlobOutputHandler(cloudBlobDirectory());
-	}
 }

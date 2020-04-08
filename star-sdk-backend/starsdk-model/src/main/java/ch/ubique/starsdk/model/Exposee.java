@@ -10,10 +10,6 @@ public class Exposee {
 
 	@NotNull
 	private String key;
-	@JsonIgnore
-	private String userAgent;
-
-	private ExposedAction action;
 
 	public String getKey() {
 		return key;
@@ -23,27 +19,12 @@ public class Exposee {
 		this.key = key;
 	}
 
-	public String getUserAgent() {
-		return userAgent;
-	}
-
-	public void setUserAgent(String userAgent) {
-		this.userAgent = userAgent;
-	}
-
+	@JsonIgnore
 	public Integer getId() {
 		return Id;
 	}
 
 	public void setId(Integer id) {
 		Id = id;
-	}
-
-	public ExposedAction getAction() {
-		return action;
-	}
-
-	public void setAction(ExposedAction action) {
-		this.action = action;
 	}
 }
