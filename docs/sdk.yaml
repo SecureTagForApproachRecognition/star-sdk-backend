@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  version: "0.1"
+  title: 'StarSDK Application Interface'
+  description: 'StarSDK Application Interface describing how to post infected keys'
+# Added by API Auto Mocking Plugin
+servers:
+# Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/Ubique-Innovation-AG/SDK-Backend/0.1
+paths:
+  /v1/{dayDate}.json:
+    get:
+      summary: getExposees
+      description: 'this request is available on the static server only!'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ch.ubique.starsdk.model.ExposedOverview'
+      parameters:
+      - name: dayDate
+        in: path
+        description: 'yyyyMMdd'
+        example: '20200327'
+        required: true
+        schema:
+          type: string
+  /v1/exposed:
+    post:
+      summary: addExposee
+      description: addExposee
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ch.ubique.starsdk.model.ExposeeRequest'
+        description: N/A
+      parameters:
+      - name: User-Agent
+        in: header
+        description: 'App Identifier (PackageName/BundleIdentifier) + App-Version + OS (Android/iOS) + OS-Version'
+        example: 'ch.ubique.android.starsdk;1.0;iOS;13.3'
+        required: true
+        schema:
+          type: string
+components:
+  schemas:
+    ch.ubique.starsdk.model.AuthData:
+      type: object
+      properties:
+        authData:
+          type: string
+          description: Base64 encoded binary data
+        algorithm:
+          type: string
+          description: identifier for the algorithm used
+    ch.ubique.starsdk.model.ExposeeRequest:
+      type: object
+      required:
+      - key
+      - authData
+      properties:
+        key:
+          type: string
+          example: 8c8494e3-bab5-1848-40a0-1b06991c0000
+        authData:
+          $ref: '#/components/schemas/ch.ubique.starsdk.model.AuthData'
+    ch.ubique.starsdk.model.ExposedAction:
+      type: string
+      enum:
+      - ADD
+      - REMOVE  
+    ch.ubique.starsdk.model.ExposedOverview:
+      type: object
+      required:
+      - exposed
+      properties:
+        exposed:
+          type: array
+          items:
+            $ref: '#/components/schemas/ch.ubique.starsdk.model.Exposee'
+    ch.ubique.starsdk.model.Exposee:
+      type: object
+      required:
+      - key
+      properties:
+        id:
+          type: integer
+          example: 123
+        action:
+          $ref: '#/components/schemas/ch.ubique.starsdk.model.ExposedAction'
+          example: ADD
+        key:
+          type: string
+          example: 8c8494e3-bab5-1848-40a0-1b06991c0000
