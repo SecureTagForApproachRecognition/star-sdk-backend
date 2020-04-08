@@ -10,3 +10,5 @@ mvn install
 ```bash
 java -jar starsdk-ws-*.jar
 ```
+## Dockerfiles
+We split the pure SDK implementation from app specific (proprietary) implementation. Therefore we use two services, both of which run as docker containers. The dockerfile includes a base jdk image to run the jar. To actually build the docker container, you need to place the generated jar in the bin folder.
