@@ -1,10 +1,20 @@
 # STAR SDK Backend
 ## Introduction
-This is an implementation of the backend services for the Secure Tag for Approach Recognition (STAR) SDK. The idea of the sdk is, to provide an SDK, which enables an easy way to provide methods for contact tracing. This project was built within 71 hours at the HackZurich Hackathon 2020.
+This repository contains a backend implementation (webservice) written with Spring Boot, that implements the specification of the Decentralized Privacy-Preserving Proximity Tracing system.
+
+## Dependencies
+* Spring Boot 2.2.6
+* Java 8 (or higher)
+* Logback
+
+## Database
+For development purposes an hsqldb can be used to run the webservice locally. For production systems we recommend connecting to a PostgreSQL dabatase (cluster if possible).
 
 The backend specification is documented [here](https://securetagforapproachrecognition.github.io/star-sdk-backend/).
 
 ## Build
+To build you need to install Maven.
+
 ```bash
 cd star-sdk-backend
 mvn install
