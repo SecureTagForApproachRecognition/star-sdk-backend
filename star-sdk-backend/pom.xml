@@ -74,6 +74,17 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>ch.ubique.openapi</groupId>
+            <artifactId>doc-annotations</artifactId>
+            <version>0.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.ubique.openapi</groupId>
+            <artifactId>springboot-swagger-3</artifactId>
+            <version>1.1</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -96,6 +107,16 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
+        </repository>
+        <repository>
+            <id>github</id>
+            <name>github</name>
+            <url>https://maven.pkg.github.com/Ubique-OSS/springboot-swagger3-annotations</url>
+        </repository>
+          <repository>
+            <id>github-annotation</id>
+            <name>github</name>
+            <url>https://maven.pkg.github.com/Ubique-OSS/springboot-swagger3</url>
         </repository>
     </repositories>
 

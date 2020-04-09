@@ -75,6 +75,35 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+                <groupId>ch.ubique.openapi</groupId>
+                <artifactId>springboot-swagger-3</artifactId>
+                <version>1.1-SNAPSHOT</version>
+
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>springboot-swagger-3</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <apiVersion>1.0-develop</apiVersion>
+                    <basePackages>
+                        ch.ubique.starsdk
+                    </basePackages>
+                    <controllers>
+                        <controller>ch.ubique.starsdk.ws.controller.STARController</controller>
+                    </controllers>
+                    <description>STARSDK API</description>
+                    <apiUrls>
+                        <apiUrl>https://app-test-ws.star-app.ch</apiUrl>
+                        <apiUrl>https://app-prod-ws.star-app.ch</apiUrl>
+                    </apiUrls>
+                    <title>STARSDK API</title>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 </project>
