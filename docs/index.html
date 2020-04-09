@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>PEPP-PT Application Interface</title>
+    <title>STARSDK API</title>
     <style type="text/css">
       body {
       	font-family: Trebuchet MS, sans-serif;
@@ -178,10 +178,10 @@
     </style>
   </head>
   <body>
-  <h1>PEPP-PT Application Interface</h1>
-    <div class="app-desc">PEPP-PT Application Interface describing how to post infected keys</div>
-    <div class="app-desc">Version: 0.1</div>
-    <div class="app-desc">BasePath:/Ubique-Innovation-AG/PEPP-PT-API/0.1</div>
+  <h1>STARSDK API</h1>
+    <div class="app-desc">STARSDK API</div>
+    <div class="app-desc">Version: 1.0-develop</div>
+
   <h2>Access</h2>
 
   <h2><a name="__Methods">Methods</a></h2>
@@ -191,23 +191,24 @@
   <div class="method-summary"></div>
   <h4><a href="#Default">Default</a></h4>
   <ul>
-  <li><a href="#v1DayDateJsonGet"><code><span class="http-method">get</span> /v1/{dayDate}.json</code></a></li>
+  <li><a href="#v1ExposedDayDateStrGet"><code><span class="http-method">get</span> /v1/exposed/{dayDateStr}</code></a></li>
   <li><a href="#v1ExposedPost"><code><span class="http-method">post</span> /v1/exposed</code></a></li>
+  <li><a href="#v1Get"><code><span class="http-method">get</span> /v1/</code></a></li>
   </ul>
 
   <h1><a name="Default">Default</a></h1>
-  <div class="method"><a name="v1DayDateJsonGet"></a>
+  <div class="method"><a name="v1ExposedDayDateStrGet"></a>
     <div class="method-path">
     <a class="up" href="#__Methods">Up</a>
-    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/{dayDate}.json</code></pre></div>
-    <div class="method-summary">getExposees (<span class="nickname">v1DayDateJsonGet</span>)</div>
-    <div class="method-notes">this request is available on the static server only!</div>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/exposed/{dayDateStr}</code></pre></div>
+    <div class="method-summary">getExposed (<span class="nickname">v1ExposedDayDateStrGet</span>)</div>
+    <div class="method-notes"></div>
 
     <h3 class="field-label">Path parameters</h3>
     <div class="field-items">
-      <div class="param">dayDate (required)</div>
+      <div class="param">dayDateStr (required)</div>
       
-            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; yyyyMMdd </div>    </div>  <!-- field-items -->
+            <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  </div>    </div>  <!-- field-items -->
 
 
 
@@ -226,13 +227,11 @@
     <div class="example-data-content-type">Content-Type: application/json</div>
     <pre class="example"><code>{
   "exposed" : [ {
-    "action" : "ADD",
-    "id" : 123,
-    "key" : "8c8494e3-bab5-1848-40a0-1b06991c0000"
+    "Id" : 0,
+    "key" : "AAAA"
   }, {
-    "action" : "ADD",
-    "id" : 123,
-    "key" : "8c8494e3-bab5-1848-40a0-1b06991c0000"
+    "Id" : 0,
+    "key" : "AAAA"
   } ]
 }</code></pre>
 
@@ -245,8 +244,11 @@
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
-    
+    Returns ExposedOverview, which includes all secretkeys which were published on dayDateStr.
         <a href="#ch.ubique.starsdk.model.ExposedOverview">ch.ubique.starsdk.model.ExposedOverview</a>
+    <h4 class="field-label">500</h4>
+    If the date time string is not parseable.
+        <a href="#"></a>
   </div> <!-- method -->
   <hr/>
   <div class="method"><a name="v1ExposedPost"></a>
@@ -254,7 +256,7 @@
     <a class="up" href="#__Methods">Up</a>
     <pre class="post"><code class="huge"><span class="http-method">post</span> /v1/exposed</code></pre></div>
     <div class="method-summary">addExposee (<span class="nickname">v1ExposedPost</span>)</div>
-    <div class="method-notes">addExposee</div>
+    <div class="method-notes">Enpoint used to publish the secretkey.</div>
 
 
     <h3 class="field-label">Consumes</h3>
@@ -297,6 +299,47 @@
 
     <h3 class="field-label">Responses</h3>
     <h4 class="field-label">200</h4>
+    Returns OK if successfull
+        <a href="#String">String</a>
+    <h4 class="field-label">400</h4>
+    Either key is not base64 or no auth data given
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="v1Get"></a>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /v1/</code></pre></div>
+    <div class="method-summary">hello (<span class="nickname">v1Get</span>)</div>
+    <div class="method-notes">hello</div>
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      String
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>""</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
     
         <a href="#String">String</a>
   </div> <!-- method -->
@@ -307,23 +350,15 @@
 
   <h3>Table of Contents</h3>
   <ol>
-    <li><a href="#ch.ubique.starsdk.model.AuthData"><code>ch.ubique.starsdk.model.AuthData</code></a></li>
-    <li><a href="#ch.ubique.starsdk.model.ExposedAction"><code>ch.ubique.starsdk.model.ExposedAction</code></a></li>
+    <li><a href="#ch.ubique.starsdk.model.AuthDataMethod"><code>ch.ubique.starsdk.model.AuthDataMethod</code></a></li>
     <li><a href="#ch.ubique.starsdk.model.ExposedOverview"><code>ch.ubique.starsdk.model.ExposedOverview</code></a></li>
     <li><a href="#ch.ubique.starsdk.model.Exposee"><code>ch.ubique.starsdk.model.Exposee</code></a></li>
+    <li><a href="#ch.ubique.starsdk.model.ExposeeAuthData"><code>ch.ubique.starsdk.model.ExposeeAuthData</code></a></li>
     <li><a href="#ch.ubique.starsdk.model.ExposeeRequest"><code>ch.ubique.starsdk.model.ExposeeRequest</code></a></li>
   </ol>
 
   <div class="model">
-    <h3><a name="ch.ubique.starsdk.model.AuthData"><code>ch.ubique.starsdk.model.AuthData</code></a> <a class="up" href="#__Models">Up</a></h3>
-    
-    <div class="field-items">
-      <div class="param">authData (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Base64 encoded binary data </div>
-<div class="param">method (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> identifier for the method used </div>
-    </div>  <!-- field-items -->
-  </div>
-  <div class="model">
-    <h3><a name="ch.ubique.starsdk.model.ExposedAction"><code>ch.ubique.starsdk.model.ExposedAction</code></a> <a class="up" href="#__Models">Up</a></h3>
+    <h3><a name="ch.ubique.starsdk.model.AuthDataMethod"><code>ch.ubique.starsdk.model.AuthDataMethod</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
           </div>  <!-- field-items -->
@@ -332,27 +367,32 @@
     <h3><a name="ch.ubique.starsdk.model.ExposedOverview"><code>ch.ubique.starsdk.model.ExposedOverview</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
-      <div class="param">exposed </div><div class="param-desc"><span class="param-type"><a href="#ch.ubique.starsdk.model.Exposee">array[ch.ubique.starsdk.model.Exposee]</a></span>  </div>
+      <div class="param">exposed (optional)</div><div class="param-desc"><span class="param-type"><a href="#ch.ubique.starsdk.model.Exposee">array[ch.ubique.starsdk.model.Exposee]</a></span> A list of all SecretKeys </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
     <h3><a name="ch.ubique.starsdk.model.Exposee"><code>ch.ubique.starsdk.model.Exposee</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
-      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
-          <div class="param-desc"><span class="param-type">example: 123</span></div>
-<div class="param">action (optional)</div><div class="param-desc"><span class="param-type"><a href="#ch.ubique.starsdk.model.ExposedAction">ch.ubique.starsdk.model.ExposedAction</a></span>  </div>
-<div class="param">key </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-          <div class="param-desc"><span class="param-type">example: 8c8494e3-bab5-1848-40a0-1b06991c0000</span></div>
+      <div class="param">Id (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span>  </div>
+<div class="param">key </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The SecretKey of a exposed. </div>
+          <div class="param-desc"><span class="param-type">example: AAAA</span></div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="ch.ubique.starsdk.model.ExposeeAuthData"><code>ch.ubique.starsdk.model.ExposeeAuthData</code></a> <a class="up" href="#__Models">Up</a></h3>
+    
+    <div class="field-items">
+      <div class="param">value (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> Authentication data used to verify the test result </div>
+<div class="param">method (optional)</div><div class="param-desc"><span class="param-type"><a href="#ch.ubique.starsdk.model.AuthDataMethod">ch.ubique.starsdk.model.AuthDataMethod</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   <div class="model">
     <h3><a name="ch.ubique.starsdk.model.ExposeeRequest"><code>ch.ubique.starsdk.model.ExposeeRequest</code></a> <a class="up" href="#__Models">Up</a></h3>
     
     <div class="field-items">
-      <div class="param">key </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
-          <div class="param-desc"><span class="param-type">example: 8c8494e3-bab5-1848-40a0-1b06991c0000</span></div>
-<div class="param">authData </div><div class="param-desc"><span class="param-type"><a href="#ch.ubique.starsdk.model.AuthData">ch.ubique.starsdk.model.AuthData</a></span>  </div>
+      <div class="param">key </div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span> The SecretKey used to generate EphID </div>
+<div class="param">authData </div><div class="param-desc"><span class="param-type"><a href="#ch.ubique.starsdk.model.ExposeeAuthData">ch.ubique.starsdk.model.ExposeeAuthData</a></span>  </div>
     </div>  <!-- field-items -->
   </div>
   </body>
