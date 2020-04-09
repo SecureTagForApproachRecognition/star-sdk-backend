@@ -6,10 +6,14 @@ FILE_NAME = documentation.tex
 
 LATEX = xelatex
 BIBER = biber
+RUSTY_SWAGGER = rusty-swagger
 
 all: clean all1
-all1: clean la la2 la3 
-no: clean la la2 
+all1: clean swagger la la2 la3 
+no: clean swagger la la2 
+
+swagger:
+	@$(RUSTY_SWAGGER) --file ../star-sdk-backend/starsdk-ws/generated/swagger/swagger.yaml
 
 la:
 	@$(LATEX) $(FILE_NAME)

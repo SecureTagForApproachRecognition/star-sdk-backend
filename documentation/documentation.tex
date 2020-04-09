@@ -1,0 +1,201 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[a4paper
+]{ubarticle}
+\usepackage{graphicx}
+\usepackage{amssymb,amsmath}
+    \usepackage{parskip}
+  \usepackage{tabu}
+  \usepackage{longtable}
+\makeatother
+
+\usepackage{hyperref}
+\hypersetup{
+  pdftitle={Viadi Routing API},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Viadi Routing API}
+\date{\today}
+\author{Ubique Innovation AG}
+
+\begin{document}
+\begin{titlepage}
+	\includegraphics[width=7cm]{ubique-logo.png}
+	\hspace{4.3cm}
+ {\raggedleft
+	 \textbf{Ubique Innovation AG} \\
+	\hspace{11.5cm} Niederdorfstrasse 77 \\
+	8001 Zürich \\
+\vspace{0.3cm}
+	\url{www.ubique.ch } 
+\par}
+	\vspace{3cm}
+	{\Huge STARSDK API \par}
+	\vspace{1.5cm}
+	{\huge Documentation \par}
+	\vspace{3cm}
+	{ \large \today }
+	\end{titlepage}
+\thispagestyle{empty}
+\clearpage
+\tableofcontents
+\clearpage
+\include{introduction}
+\part{Web Service}
+\section{ /v1/ }
+    \begin{verbatim}
+    get /v1/
+    \end{verbatim}
+hello
+
+\subsection{Responses}
+\subsubsection{ 200 Success }
+ 
+
+    
+        \begin{ubresponses}{\textwidth}{|Y|}
+        \ubheader{Type}\\
+        \hline
+             \hyperref[sec:string] { string } \\
+ \hline
+
+        \end{ubresponses}
+    
+\section{ /v1/exposed }
+    \begin{verbatim}
+    post /v1/exposed
+    \end{verbatim}
+Enpoint used to publish the secretkey.
+
+\subsection{ Request Headers }
+\begin{ubparam}{\textwidth}{|H|c|Y|}
+\ubheader{Field} & \ubheader{Type} & \ubheader{Description}\\
+\hline
+\ubheader{ User-Agent }   \textcolor{red}{\emph{*}}  &  string  &  \\
+\hline
+\end{ubparam}
+
+\subsection{ Request Body }
+\begin{ubparam}{\textwidth}{|H|c|Y|}
+\ubheader{Field} & \ubheader{Type} & \ubheader{Description}\\
+\hline
+\ubheader{  }   \textcolor{red}{\emph{*}}  &  ExposeeRequest  & N/A
+ \\
+\hline
+\end{ubparam}
+\subsection{Responses}
+\subsubsection{ 200 Success }
+Returns OK if successfull
+ 
+
+    
+        \begin{ubresponses}{\textwidth}{|Y|}
+        \ubheader{Type}\\
+        \hline
+             \hyperref[sec:string] { string } \\
+ \hline
+
+        \end{ubresponses}
+    
+\subsubsection{ 400 Bad Request }
+Either key is not base64 or no auth data given
+ 
+
+
+\section{ /v1/exposed/{dayDateStr} }
+    \begin{verbatim}
+    get /v1/exposed/{dayDateStr}
+    \end{verbatim}
+
+\subsection{Responses}
+\subsubsection{ 200 Success }
+Returns ExposedOverview, which includes all secretkeys which were published on dayDateStr.
+ 
+
+    
+        \begin{ubresponses}{\textwidth}{|Y|}
+        \ubheader{Type}\\
+        \hline
+             \hyperref[sec:ExposedOverview] { ExposedOverview } \\
+ \hline
+
+        \end{ubresponses}
+    
+\subsubsection{ 500 Internal Server Error }
+If the date time string is not parseable.
+ 
+
+
+
+\part{Models}
+\subsection{ AuthDataMethod }
+\label{sec:AuthDataMethod}
+
+\begin{itemize}
+    \item NONE
+    \item REDEEM\_CODE
+\end{itemize}
+
+\subsection{ ExposedOverview }
+\label{sec:ExposedOverview}
+\begin{ubresponses}{\textwidth}{|H|c|Y|p{2cm}|}
+\ubheader{Field} & \ubheader{Type}  &\ubheader{Description}& \ubheader{Example}\\
+\hline
+ \ubheader{ exposed }  & \hyperref[sec:Exposee]{ Exposee[] }   & A list of all SecretKeys
+ &  \\
+\hline
+
+\end{ubresponses}
+
+\subsection{ Exposee }
+\label{sec:Exposee}
+\begin{ubresponses}{\textwidth}{|H|c|Y|p{2cm}|}
+\ubheader{Field} & \ubheader{Type}  &\ubheader{Description}& \ubheader{Example}\\
+\hline
+ \ubheader{ Id }  & \hyperref[sec:integer]{ integer }   &  &  \\
+\hline
+ \ubheader{ key }  \textcolor{red}{\emph{*}}  & \hyperref[sec:string]{ string }   & The SecretKey of a exposed.
+ & AAAA \\
+\hline
+
+\end{ubresponses}
+
+\subsection{ ExposeeAuthData }
+\label{sec:ExposeeAuthData}
+\begin{ubresponses}{\textwidth}{|H|c|Y|p{2cm}|}
+\ubheader{Field} & \ubheader{Type}  &\ubheader{Description}& \ubheader{Example}\\
+\hline
+ \ubheader{ value }  & \hyperref[sec:string]{ string }   & Authentication data used to verify the test result
+ &  \\
+\hline
+ \ubheader{ method }  & \hyperref[sec:AuthDataMethod]{ AuthDataMethod }   & Specify the method, which should be used to verify data
+ &  \\
+\hline
+
+\end{ubresponses}
+
+\subsection{ ExposeeRequest }
+\label{sec:ExposeeRequest}
+\begin{ubresponses}{\textwidth}{|H|c|Y|p{2cm}|}
+\ubheader{Field} & \ubheader{Type}  &\ubheader{Description}& \ubheader{Example}\\
+\hline
+ \ubheader{ key }  \textcolor{red}{\emph{*}}  & \hyperref[sec:string]{ string }   & The SecretKey used to generate EphID
+ &  \\
+\hline
+ \ubheader{ authData }  \textcolor{red}{\emph{*}}  & \hyperref[sec:ExposeeAuthData]{ ExposeeAuthData }   & AuthenticationData provided by the health institutes to verify the test results
+ &  \\
+\hline
+
+\end{ubresponses}
+
+
+
+\end{document}
