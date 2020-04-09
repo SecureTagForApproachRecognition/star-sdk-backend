@@ -1,6 +1,7 @@
 package ch.ubique.starsdk.model;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import ch.ubique.openapi.docannotations.Documentation;
 
@@ -11,6 +12,7 @@ public class ExposeeRequest {
 	private String key;
 
 	@NotNull
+	@Size(max = 10)
 	@Documentation(description = "The onset date of the secret key. Format: yyyy-MM-dd")
 	private String onset;
 
