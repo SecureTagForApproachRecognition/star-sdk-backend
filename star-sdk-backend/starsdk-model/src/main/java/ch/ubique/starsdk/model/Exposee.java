@@ -11,7 +11,7 @@ public class Exposee {
 	private Integer Id;
 
 	@NotNull
-	@Documentation(description = "The SecretKey of an exposed.", example = "AAAA")
+	@Documentation(description = "The SecretKey of a exposed as a base64 encoded string. The SecretKey consists of 32 bytes.", example = "QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVpBQkNERUY=")
 	private String key;
 
 	@NotNull

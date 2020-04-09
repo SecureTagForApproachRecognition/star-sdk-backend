@@ -17,7 +17,7 @@ public class ExposeeRequest {
 	private String onset;
 
 	@NotNull
-	@Documentation(description = "AuthenticationData provided by the health institutes to verify the test results")
+	@Documentation(description = "AuthenticationData provided by the health institutes to verify the test results", example = "TBD")
 	private ExposeeAuthData authData;
 
 	public String getKey() {
