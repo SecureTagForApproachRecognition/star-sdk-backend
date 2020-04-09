@@ -1,0 +1,61 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[a4paper
+]{ubarticle}
+\usepackage{graphicx}
+\usepackage{amssymb,amsmath}
+    \usepackage{parskip}
+  \usepackage{tabu}
+  \usepackage{longtable}
+\makeatother
+
+\usepackage{hyperref}
+\hypersetup{
+  pdftitle={Viadi Routing API},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+
+\title{Viadi Routing API}
+\date{\today}
+\author{Ubique Innovation AG}
+
+\begin{document}
+\begin{titlepage}
+	\includegraphics[width=7cm]{ubique-logo.png}
+	\hspace{4.3cm}
+ {\raggedleft
+	 \textbf{Ubique Innovation AG} \\
+	\hspace{11.5cm} Niederdorfstrasse 77 \\
+	8001 Zürich \\
+\vspace{0.3cm}
+	\url{www.ubique.ch } 
+\par}
+	\vspace{3cm}
+	{\Huge {{title}} \par}
+	\vspace{1.5cm}
+	{\huge Documentation \par}
+	\vspace{3cm}
+	{ \large \today }
+	\end{titlepage}
+\thispagestyle{empty}
+\clearpage
+\tableofcontents
+\clearpage
+\include{introduction}
+\part{Web Service}
+{{#requests}}
+{{> request }}
+{{/requests}}
+\part{Models}
+{{#schemas}}
+{{> schema }}
+{{/schemas}}
+
+\end{document}
