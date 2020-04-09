@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import ch.ubique.openapi.docannotations.Documentation;
 import ch.ubique.starsdk.data.STARDataService;
 import ch.ubique.starsdk.model.ExposedOverview;
 import ch.ubique.starsdk.model.Exposee;
@@ -49,7 +50,14 @@ public class STARController {
 		return "Hello from STAR SDK WS";
 	}
 
+	
 	@RequestMapping(value = "/exposed", method = RequestMethod.POST)
+	@Documentation(
+		description = "Enpoint used to publish the secretkey.",
+		responses = {
+		"200 => Returns OK if successfull",
+		"400 => Either key is not base64 or no auth data given"
+	})
 	public @ResponseBody ResponseEntity<String> addExposee(@Valid @RequestBody ExposeeRequest exposeeRequest,
 			@RequestHeader(value = "User-Agent", required = true) String userAgent) {
 		if (isValidBase64(exposeeRequest.getKey())) {
@@ -66,6 +74,12 @@ public class STARController {
 		}
 	}
 
+	@Documentation(
+		responses = {
+			"200 => Returns ExposedOverview, which includes all secretkeys which were published on dayDateStr.",
+			"500 => If the date time string is not parseable."
+		}
+	)
 	@RequestMapping(value = "/exposed/{dayDateStr}")
 	public @ResponseBody ResponseEntity<ExposedOverview> getExposed(@PathVariable String dayDateStr) {
 		DateTime dayDate = DAY_DATE_FORMATTER.parseDateTime(dayDateStr);
