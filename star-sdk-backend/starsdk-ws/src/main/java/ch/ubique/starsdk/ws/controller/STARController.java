@@ -53,13 +53,13 @@ public class STARController {
 	
 	@RequestMapping(value = "/exposed", method = RequestMethod.POST)
 	@Documentation(
-		description = "Enpoint used to publish the secretkey.",
+		description = "Enpoint used to publish the SecretKey.",
 		responses = {
-		"200 => Returns OK if successfull",
-		"400 => Either key is not base64 or no auth data given"
+		"200 => Returns OK if successful",
+		"400 => Multiple possible errors: \n- Key is not base64\n - No AuthData given"
 	})
-	public @ResponseBody ResponseEntity<String> addExposee(@Valid @RequestBody ExposeeRequest exposeeRequest,
-			@RequestHeader(value = "User-Agent", required = true) String userAgent) {
+	public @ResponseBody ResponseEntity<String> addExposee(@Valid @RequestBody @Documentation(description = "The ExposeeRequest contains the SecretKey from the guessed infection date, the infection date itself, and some authentication data to verify the test result") ExposeeRequest exposeeRequest,
+			@RequestHeader(value = "User-Agent", required = true) @Documentation(description = "App Identifier (PackageName/BundleIdentifier) + App-Version + OS (Android/iOS) + OS-Version", example = "ch.ubique.android.starsdk;1.0;iOS;13.3") String userAgent) {
 		if (isValidBase64(exposeeRequest.getKey())) {
 			if (isValiExposeeRequestAuth(exposeeRequest.getAuthData())) {
 				Exposee exposee = new Exposee();
@@ -76,12 +76,12 @@ public class STARController {
 
 	@Documentation(
 		responses = {
-			"200 => Returns ExposedOverview, which includes all secretkeys which were published on dayDateStr.",
+			"200 => Returns ExposedOverview, which includes all secretkeys which were published on _dayDateStr_.",
 			"500 => If the date time string is not parseable."
 		}
 	)
 	@RequestMapping(value = "/exposed/{dayDateStr}")
-	public @ResponseBody ResponseEntity<ExposedOverview> getExposed(@PathVariable String dayDateStr) {
+	public @ResponseBody ResponseEntity<ExposedOverview> getExposed(@PathVariable @Documentation(description = "The date for which we want to get the SecretKey.", example = "2019-01-31") String dayDateStr) {
 		DateTime dayDate = DAY_DATE_FORMATTER.parseDateTime(dayDateStr);
 		List<Exposee> exposeeList = dataService.getExposedForDay(dayDate);
 		ExposedOverview overview = new ExposedOverview(exposeeList);

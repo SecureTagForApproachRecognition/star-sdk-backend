@@ -2,12 +2,16 @@ package ch.ubique.starsdk.model;
 
 import javax.validation.constraints.NotNull;
 
+import ch.ubique.openapi.docannotations.Documentation;
+
 public class ExposeeRequest {
 
 	@NotNull
+	@Documentation(description = "The SecretKey used to generate EphID")
 	private String key;
 
 	@NotNull
+	@Documentation(description = "AuthenticationData provided by the health institutes to verify the test results")
 	private ExposeeAuthData authData;
 
 	public String getKey() {

@@ -50,6 +50,7 @@
 \clearpage
 \include{introduction}
 \part{Web Service}
+This part of the documentation deals with the different API-Endpoints. Examples to fields are put into the models section~\ref{sec:Models} to increase readability. Every request lists all possible status codes and the reason for the status code.
 \section{ /v1/ }
     \begin{verbatim}
     get /v1/
@@ -73,27 +74,28 @@ hello
     \begin{verbatim}
     post /v1/exposed
     \end{verbatim}
-Enpoint used to publish the secretkey.
+Enpoint used to publish the SecretKey.
 
 \subsection{ Request Headers }
 \begin{ubparam}{\textwidth}{|H|c|Y|}
 \ubheader{Field} & \ubheader{Type} & \ubheader{Description}\\
 \hline
-\ubheader{ User-Agent }   \textcolor{red}{\emph{*}}  &  string  &  \\
+\ubheader{ User-Agent }   \textcolor{red}{\emph{*}}  &  string  & App Identifier (PackageName/BundleIdentifier) + App-Version + OS (Android/iOS) + OS-Version
+ \\
 \hline
 \end{ubparam}
 
-\subsection{ Request Body }
+\subsection{ Response Body }
 \begin{ubparam}{\textwidth}{|H|c|Y|}
 \ubheader{Field} & \ubheader{Type} & \ubheader{Description}\\
 \hline
-\ubheader{  }   \textcolor{red}{\emph{*}}  &  ExposeeRequest  & N/A
+\ubheader{  }   \textcolor{red}{\emph{*}}  &  ExposeeRequest  & The ExposeeRequest contains the SecretKey from the guessed infection date, the infection date itself, and some authentication data to verify the test result
  \\
 \hline
 \end{ubparam}
 \subsection{Responses}
 \subsubsection{ 200 Success }
-Returns OK if successfull
+Returns OK if successful
  
 
     
@@ -106,8 +108,11 @@ Returns OK if successfull
         \end{ubresponses}
     
 \subsubsection{ 400 Bad Request }
-Either key is not base64 or no auth data given
- 
+Multiple possible errors: 
+\begin{itemize}
+\item Key is not base64
+\item No AuthData given
+\end{itemize} 
 
 
 \section{ /v1/exposed/{dayDateStr} }
@@ -115,9 +120,18 @@ Either key is not base64 or no auth data given
     get /v1/exposed/{dayDateStr}
     \end{verbatim}
 
+
+\subsection{ Path Parameters }
+\begin{ubparam}{\textwidth}{|H|c|Y|}
+\ubheader{Field} & \ubheader{Type} & \ubheader{Description}\\
+\hline
+\ubheader{ dayDateStr }   \textcolor{red}{\emph{*}}  &  string  & The date for which we want to get the SecretKey.
+ \\
+\hline
+\end{ubparam}
 \subsection{Responses}
 \subsubsection{ 200 Success }
-Returns ExposedOverview, which includes all secretkeys which were published on dayDateStr.
+Returns ExposedOverview, which includes all secretkeys which were published on \emph{dayDateStr}.
  
 
     
@@ -136,6 +150,8 @@ If the date time string is not parseable.
 
 
 \part{Models}
+All Models, which are used by the Enpoints are described here. For every field we give examples, to give an overview of what the backend expects.
+\label{sec:Models}
 \subsection{ AuthDataMethod }
 \label{sec:AuthDataMethod}
 

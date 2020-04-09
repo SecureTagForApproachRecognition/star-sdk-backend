@@ -27,8 +27,19 @@
 {{/params}}
 \end{ubparam}
 {{/query_parameters}}
+{{#path_parameters}}
+\subsection{ Path Parameters }
+\begin{ubparam}{\textwidth}{|H|c|Y|}
+\ubheader{Field} & \ubheader{Type} & \ubheader{Description}\\
+\hline
+{{#params}}
+{{>param}}
+\hline
+{{/params}}
+\end{ubparam}
+{{/path_parameters}}
 {{#response_body}}
-\subsection{ Request Body }
+\subsection{ Response Body }
 \begin{ubparam}{\textwidth}{|H|c|Y|}
 \ubheader{Field} & \ubheader{Type} & \ubheader{Description}\\
 \hline

@@ -50,10 +50,13 @@
 \clearpage
 \include{introduction}
 \part{Web Service}
+This part of the documentation deals with the different API-Endpoints. Examples to fields are put into the models section~\ref{sec:Models} to increase readability. Every request lists all possible status codes and the reason for the status code.
 {{#requests}}
 {{> request }}
 {{/requests}}
 \part{Models}
+All Models, which are used by the Enpoints are described here. For every field we give examples, to give an overview of what the backend expects.
+\label{sec:Models}
 {{#schemas}}
 {{> schema }}
 {{/schemas}}
