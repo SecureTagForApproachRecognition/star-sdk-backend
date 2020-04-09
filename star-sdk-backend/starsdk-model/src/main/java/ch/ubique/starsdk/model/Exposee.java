@@ -11,8 +11,12 @@ public class Exposee {
 	private Integer Id;
 
 	@NotNull
-	@Documentation(description = "The SecretKey of a exposed.", example = "AAAA")
+	@Documentation(description = "The SecretKey of an exposed.", example = "AAAA")
 	private String key;
+
+	@NotNull
+	@Documentation(description = "The onset of an exposed.", example = "2020-04-06")
+	private String onset;
 
 	public String getKey() {
 		return key;
@@ -29,5 +33,13 @@ public class Exposee {
 
 	public void setId(Integer id) {
 		Id = id;
+	}
+
+	public String getOnset() {
+		return onset;
+	}
+
+	public void setOnset(String onset) {
+		this.onset = onset;
 	}
 }

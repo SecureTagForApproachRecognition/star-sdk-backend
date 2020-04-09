@@ -14,12 +14,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import ch.ubique.openapi.docannotations.Documentation;
 import ch.ubique.starsdk.data.STARDataService;
@@ -50,7 +52,6 @@ public class STARController {
 		return "Hello from STAR SDK WS";
 	}
 
-	
 	@RequestMapping(value = "/exposed", method = RequestMethod.POST)
 	@Documentation(
 		description = "Enpoint used to publish the SecretKey.",
@@ -64,6 +65,7 @@ public class STARController {
 			if (isValiExposeeRequestAuth(exposeeRequest.getAuthData())) {
 				Exposee exposee = new Exposee();
 				exposee.setKey(exposeeRequest.getKey());
+				exposee.setOnset(exposeeRequest.getOnset());
 				dataService.upsertExposee(exposee, appSource);
 				return ResponseEntity.ok().build();
 			} else {
@@ -86,6 +88,12 @@ public class STARController {
 		List<Exposee> exposeeList = dataService.getExposedForDay(dayDate);
 		ExposedOverview overview = new ExposedOverview(exposeeList);
 		return ResponseEntity.ok(overview);
+	}
+
+	@ExceptionHandler(IllegalArgumentException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ResponseEntity<?> invalidArguments() {
+		return ResponseEntity.badRequest().build();
 	}
 
 	private boolean isValidBase64(String value) {

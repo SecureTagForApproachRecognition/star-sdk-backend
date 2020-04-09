@@ -11,6 +11,10 @@ public class ExposeeRequest {
 	private String key;
 
 	@NotNull
+	@Documentation(description = "The onset date of the secret key. Format: yyyy-MM-dd")
+	private String onset;
+
+	@NotNull
 	@Documentation(description = "AuthenticationData provided by the health institutes to verify the test results")
 	private ExposeeAuthData authData;
 
@@ -28,5 +32,13 @@ public class ExposeeRequest {
 
 	public void setAuthData(ExposeeAuthData authData) {
 		this.authData = authData;
+	}
+
+	public String getOnset() {
+		return onset;
+	}
+
+	public void setOnset(String onset) {
+		this.onset = onset;
 	}
 }

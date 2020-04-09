@@ -31,17 +31,17 @@ public class JDBCSTARDataServiceImpl implements STARDataService {
 	public void upsertExposee(Exposee exposee, String appSource) {
 		String sql = null;
 		if (dbType.equals(PGSQL)) {
-			sql = "insert into t_exposed (key, app_source) values (:key, :app_source)"
+			sql = "insert into t_exposed (key, onset, app_source) values (:key, to_date(:onset, 'yyyy-MM-dd'), :app_source)"
 					+ " on conflict on constraint key do nothing";
 		} else {
-			sql = "merge into t_exposed using (values(cast(:key as varchar(10000)), cast(:app_source as varchar(50))))"
-					+ " as vals(key, app_source) on t_exposed.key = vals.key"
-					+ " when matched then update set t_exposed.key = vals.key, t_exposed.app_source = vals.app_source"
-					+ " when not matched then insert (key, app_source) values (vals.key, vals.app_source)";
+			sql = "merge into t_exposed using (values(cast(:key as varchar(10000)), cast(:onset as date), cast(:app_source as varchar(50))))"
+					+ " as vals(key, onset, app_source) on t_exposed.key = vals.key"
+					+ " when not matched then insert (key, onset, app_source) values (vals.key, vals.onset, vals.app_source)";
 		}
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("key", exposee.getKey());
 		params.addValue("app_source", appSource);
+		params.addValue("onset", exposee.getOnset());
 		jt.update(sql, params);
 	}
 
@@ -49,7 +49,7 @@ public class JDBCSTARDataServiceImpl implements STARDataService {
 	@Transactional(readOnly = true)
 	public List<Exposee> getExposedForDay(DateTime day) {
 		DateTime dayMidnight = day.minusMillis(day.getMillisOfDay());
-		String sql = "select * from t_exposed where received_at >= :dayMidnight and received_at < :nextDayMidnight";
+		String sql = "select pk_exposed_id, key, to_char(onset, 'yyyy-MM-dd') as onset_string from t_exposed where received_at >= :dayMidnight and received_at < :nextDayMidnight";
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("dayMidnight", dayMidnight.toDate());
 		params.addValue("nextDayMidnight", dayMidnight.plusDays(1).toDate());

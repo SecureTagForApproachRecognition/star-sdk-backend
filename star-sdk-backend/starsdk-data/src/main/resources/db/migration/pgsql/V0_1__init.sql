@@ -2,6 +2,7 @@ CREATE TABLE "t_exposed"(
  "pk_exposed_id" Serial NOT NULL,
  "key" Text NOT NULL,
  "received_at" Timestamp with time zone DEFAULT now() NOT NULL,
+ "onset" Date NOT NULL,
  "app_source" Character varying(50) NOT NULL
 )
 WITH (autovacuum_enabled=true);

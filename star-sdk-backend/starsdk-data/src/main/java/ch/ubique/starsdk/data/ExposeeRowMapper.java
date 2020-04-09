@@ -13,6 +13,7 @@ public class ExposeeRowMapper implements RowMapper<Exposee> {
 		Exposee exposee = new Exposee();
 		exposee.setKey(rs.getString("key"));
 		exposee.setId(rs.getInt("pk_exposed_id"));
+		exposee.setOnset(rs.getString("onset_string"));
 		return exposee;
 	}
 }
