@@ -26,8 +26,6 @@ jobs:
       uses: whelk-io/maven-settings-xml-action@v4
       with:
         servers: '[{"id": "github", "username": "${{ github.actor }}", "password": "${{ github.token}}"}]'
-    - name: Build
-      run: mvn install
     - name: Build with Maven
       run: mvn install --file star-sdk-backend/pom.xml
       env:
