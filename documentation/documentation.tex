@@ -109,11 +109,8 @@ Returns OK if successful
         \end{ubresponses}
     
 \subsubsection{ 400 Bad Request }
-Multiple possible errors: 
-\begin{itemize}
-\item Key is not base64
-\item No AuthData given
-\end{itemize} 
+Key is not base64 encoded
+ 
 
 
 \section{ /v1/exposed/{dayDateStr} }
@@ -153,14 +150,6 @@ If dayDateStr has the wrong format
 \part{Models}
 All Models, which are used by the Enpoints are described here. For every field we give examples, to give an overview of what the backend expects.
 \label{sec:Models}
-\subsection{ AuthDataMethod }
-\label{sec:AuthDataMethod}
-
-\begin{itemize}
-    \item NONE
-    \item REDEEM\_CODE
-\end{itemize}
-
 \subsection{ ExposedOverview }
 \label{sec:ExposedOverview}
 \begin{ubresponses}{\textwidth}{|H|c|Y|p{3cm}|}
@@ -192,9 +181,6 @@ All Models, which are used by the Enpoints are described here. For every field w
 \ubheader{Field} & \ubheader{Type}  &\ubheader{Description}& \ubheader{Example}\\
 \hline
  \ubheader{ value }  & \hyperref[sec:string]{ string }   & Authentication data used to verify the test result
- &  \seqsplit{TBD} \\
-\hline
- \ubheader{ method }  & \hyperref[sec:AuthDataMethod]{ AuthDataMethod }   & Specify the method, which should be used to verify data. Probably unused since, if multiple different methods used, we could trace back from which health institute the result came from.
  &  \seqsplit{TBD} \\
 \hline
 

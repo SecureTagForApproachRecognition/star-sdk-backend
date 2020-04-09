@@ -57,20 +57,18 @@ public class STARController {
 		description = "Enpoint used to publish the SecretKey.",
 		responses = {
 		"200 => Returns OK if successful",
-		"400 => Multiple possible errors: \n- Key is not base64\n - No AuthData given"
+		"400 => Key is not base64 encoded"
 	})
 	public @ResponseBody ResponseEntity<String> addExposee(@Valid @RequestBody @Documentation(description = "The ExposeeRequest contains the SecretKey from the guessed infection date, the infection date itself, and some authentication data to verify the test result") ExposeeRequest exposeeRequest,
 			@RequestHeader(value = "User-Agent", required = true) @Documentation(description = "App Identifier (PackageName/BundleIdentifier) + App-Version + OS (Android/iOS) + OS-Version", example = "ch.ubique.android.starsdk;1.0;iOS;13.3") String userAgent) {
 		if (isValidBase64(exposeeRequest.getKey())) {
-			if (isValiExposeeRequestAuth(exposeeRequest.getAuthData())) {
-				Exposee exposee = new Exposee();
-				exposee.setKey(exposeeRequest.getKey());
-				exposee.setOnset(exposeeRequest.getOnset());
-				dataService.upsertExposee(exposee, appSource);
-				return ResponseEntity.ok().build();
-			} else {
-				return new ResponseEntity<String>("No valid auth data", HttpStatus.BAD_REQUEST);
-			}
+			
+			Exposee exposee = new Exposee();
+			exposee.setKey(exposeeRequest.getKey());
+			exposee.setOnset(exposeeRequest.getOnset());
+			dataService.upsertExposee(exposee, appSource);
+			return ResponseEntity.ok().build();
+			
 		} else {
 			return new ResponseEntity<String>("No valid base64 key", HttpStatus.BAD_REQUEST);
 		}
@@ -107,14 +105,4 @@ public class STARController {
 		}
 	}
 
-	private boolean isValiExposeeRequestAuth(ExposeeAuthData authData) {
-		switch (authData.getMethod()) {
-		case NONE:
-			return true;
-		case REDEEM_CODE:
-			return dataService.validateRedeemCode(authData.getValue());
-		default:
-			return false;
-		}
-	}
 }
