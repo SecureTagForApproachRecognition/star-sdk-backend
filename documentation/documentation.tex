@@ -144,8 +144,8 @@ Returns ExposedOverview, which includes all secretkeys which were published on \
 
         \end{ubresponses}
     
-\subsubsection{ 500 Internal Server Error }
-If the date time string is not parseable.
+\subsubsection{ 400 Bad Request }
+If dayDateStr has the wrong format
  
 
 
@@ -167,7 +167,7 @@ All Models, which are used by the Enpoints are described here. For every field w
 \ubheader{Field} & \ubheader{Type}  &\ubheader{Description}& \ubheader{Example}\\
 \hline
  \ubheader{ exposed }  & \hyperref[sec:Exposee]{ Exposee[] }   & A list of all SecretKeys
- &  \seqsplit{} \\
+ &  \seqsplit{c.f Exposee model} \\
 \hline
 
 \end{ubresponses}
@@ -177,10 +177,11 @@ All Models, which are used by the Enpoints are described here. For every field w
 \begin{ubresponses}{\textwidth}{|H|c|Y|p{3cm}|}
 \ubheader{Field} & \ubheader{Type}  &\ubheader{Description}& \ubheader{Example}\\
 \hline
- \ubheader{ Id }  & \hyperref[sec:integer]{ integer }   &  &  \seqsplit{} \\
-\hline
  \ubheader{ key }  \textcolor{red}{\emph{*}}  & \hyperref[sec:string]{ string }   & The SecretKey of a exposed as a base64 encoded string. The SecretKey consists of 32 bytes.
  &  \seqsplit{QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVpBQkNERUY=} \\
+\hline
+ \ubheader{ onset }  \textcolor{red}{\emph{*}}  & \hyperref[sec:string]{ string }   & The onset of an exposed.
+ &  \seqsplit{2020-04-06} \\
 \hline
 
 \end{ubresponses}
@@ -193,7 +194,7 @@ All Models, which are used by the Enpoints are described here. For every field w
  \ubheader{ value }  & \hyperref[sec:string]{ string }   & Authentication data used to verify the test result
  &  \seqsplit{TBD} \\
 \hline
- \ubheader{ method }  & \hyperref[sec:AuthDataMethod]{ AuthDataMethod }   & Specify the method, which should be used to verify data
+ \ubheader{ method }  & \hyperref[sec:AuthDataMethod]{ AuthDataMethod }   & Specify the method, which should be used to verify data. Probably unused since, if multiple different methods used, we could trace back from which health institute the result came from.
  &  \seqsplit{TBD} \\
 \hline
 
@@ -204,8 +205,11 @@ All Models, which are used by the Enpoints are described here. For every field w
 \begin{ubresponses}{\textwidth}{|H|c|Y|p{3cm}|}
 \ubheader{Field} & \ubheader{Type}  &\ubheader{Description}& \ubheader{Example}\\
 \hline
- \ubheader{ key }  \textcolor{red}{\emph{*}}  & \hyperref[sec:string]{ string }   & The SecretKey used to generate EphID
- &  \seqsplit{} \\
+ \ubheader{ key }  \textcolor{red}{\emph{*}}  & \hyperref[sec:string]{ string }   & The SecretKey used to generate EphID base64 encoded.
+ &  \seqsplit{QUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVpBQkNERUY=} \\
+\hline
+ \ubheader{ onset }  \textcolor{red}{\emph{*}}  & \hyperref[sec:string]{ string }   & The onset date of the secret key. Format: yyyy-MM-dd
+ &  \seqsplit{2019-01-31} \\
 \hline
  \ubheader{ authData }  \textcolor{red}{\emph{*}}  & \hyperref[sec:ExposeeAuthData]{ ExposeeAuthData }   & AuthenticationData provided by the health institutes to verify the test results
  &  \seqsplit{TBD} \\

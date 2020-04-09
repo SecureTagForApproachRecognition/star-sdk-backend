@@ -45,7 +45,9 @@ To build the documentation install `rusty-swagger` via `cargo`:
 cargo install rusty-swagger
 ```
 
-Then you can use the makefile to build the documentation.
+Furthermore we need a tex-distribution. Since we use the `Lato` font, we also need the possibility to generate the fonts for latex. Check your distribution for help.
+
+Then you can use the makefile to build the documentation. The makefile will first build the backend, then generate the tex file and in the end launch a tex-distribution to compile the tex file to a pdf.
 
 ```bash
 cd documentation && make

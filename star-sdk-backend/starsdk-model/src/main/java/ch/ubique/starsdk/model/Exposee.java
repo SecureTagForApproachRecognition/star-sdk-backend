@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import ch.ubique.openapi.docannotations.Documentation;
 
 public class Exposee {
-
+	@JsonIgnore
 	private Integer Id;
 
 	@NotNull

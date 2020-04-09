@@ -79,11 +79,13 @@ public class STARController {
 	@Documentation(
 		responses = {
 			"200 => Returns ExposedOverview, which includes all secretkeys which were published on _dayDateStr_.",
-			"500 => If the date time string is not parseable."
+			"400 => If dayDateStr has the wrong format"
 		}
 	)
 	@RequestMapping(value = "/exposed/{dayDateStr}")
-	public @ResponseBody ResponseEntity<ExposedOverview> getExposed(@PathVariable @Documentation(description = "The date for which we want to get the SecretKey.", example = "2019-01-31") String dayDateStr) {
+	public @ResponseBody ResponseEntity<ExposedOverview> getExposed(@PathVariable
+	 @Documentation(description = "The date for which we want to get the SecretKey.", example = "2019-01-31") 
+	 	String dayDateStr) {
 		DateTime dayDate = DAY_DATE_FORMATTER.parseDateTime(dayDateStr);
 		List<Exposee> exposeeList = dataService.getExposedForDay(dayDate);
 		ExposedOverview overview = new ExposedOverview(exposeeList);
