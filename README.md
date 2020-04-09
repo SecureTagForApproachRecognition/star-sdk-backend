@@ -1,4 +1,5 @@
 # STAR SDK Backend
+![Java CI with Maven](https://github.com/SecureTagForApproachRecognition/star-sdk-backend/workflows/Java%20CI%20with%20Maven/badge.svg?branch=master)
 ## Introduction
 This repository contains a backend implementation (webservice) written with Spring Boot, that implements the specification of the Decentralized Privacy-Preserving Proximity Tracing system.
 
