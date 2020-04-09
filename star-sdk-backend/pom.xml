@@ -78,12 +78,12 @@
         <dependency>
             <groupId>ch.ubique.openapi</groupId>
             <artifactId>doc-annotations</artifactId>
-            <version>0.0.2</version>
+            <version>0.0.3</version>
         </dependency>
         <dependency>
             <groupId>ch.ubique.openapi</groupId>
             <artifactId>springboot-swagger-3</artifactId>
-            <version>1.1</version>
+            <version>1.1.1</version>
         </dependency>
     </dependencies>
 
