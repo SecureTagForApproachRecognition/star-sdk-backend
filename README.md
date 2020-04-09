@@ -37,3 +37,15 @@ cd ws-sdk && docker build -t <the-tag-we-use> .
 ```bash
 docker run <the-tag-we-use>
  ```
+
+## Documentation
+To build the documentation install `rusty-swagger` via `cargo`:
+```bash
+cargo install rusty-swagger
+```
+
+Then you can use the makefile to build the documentation.
+
+```bash
+cd documentation && make
+```
