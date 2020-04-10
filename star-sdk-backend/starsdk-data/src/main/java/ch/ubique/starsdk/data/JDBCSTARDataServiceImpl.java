@@ -49,7 +49,7 @@ public class JDBCSTARDataServiceImpl implements STARDataService {
 	@Transactional(readOnly = true)
 	public List<Exposee> getExposedForDay(DateTime day) {
 		DateTime dayMidnight = day.minusMillis(day.getMillisOfDay());
-		String sql = "select pk_exposed_id, key, to_char(onset, 'yyyy-MM-dd') as onset_string from t_exposed where onset >= :dayMidnight and onset < :nextDayMidnight";
+		String sql = "select pk_exposed_id, key, to_char(onset, 'yyyy-MM-dd') as onset_string from t_exposed where received_at >= :dayMidnight and received_at < :nextDayMidnight";
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("dayMidnight", dayMidnight.toDate());
 		params.addValue("nextDayMidnight", dayMidnight.plusDays(1).toDate());
