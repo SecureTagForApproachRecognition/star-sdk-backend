@@ -83,7 +83,7 @@
         <dependency>
             <groupId>ch.ubique.openapi</groupId>
             <artifactId>springboot-swagger-3</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.2</version>
         </dependency>
     </dependencies>
 
@@ -101,22 +101,22 @@
 
     <repositories>
         <repository>
+            <id>github-annotation</id>
+            <name>github</name>
+            <url>https://maven.pkg.github.com/Ubique-OSS/springboot-swagger3-annotations</url>
+        </repository>
+        <repository>
+            <id>github</id>
+            <name>github</name>
+            <url>https://maven.pkg.github.com/Ubique-OSS/springboot-swagger3</url>
+        </repository>
+        <repository>
             <id>spring-snapshots</id>
             <name>Spring Snapshots</name>
             <url>http://repo.spring.io/snapshot</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-        </repository>
-        <repository>
-            <id>github-annotations</id>
-            <name>github-annotations</name>
-            <url>https://maven.pkg.github.com/Ubique-OSS/springboot-swagger3-annotations</url>
-        </repository>
-          <repository>
-            <id>github</id>
-            <name>github</name>
-            <url>https://maven.pkg.github.com/Ubique-OSS/springboot-swagger3</url>
         </repository>
     </repositories>
 
