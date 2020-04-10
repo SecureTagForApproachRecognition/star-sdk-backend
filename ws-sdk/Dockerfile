@@ -22,7 +22,7 @@ RUN mkdir -p /home/ws/bin && \
     mkdir -p /home/ws/tmp
 
 # Copy binary
-ADD ./ws/bin/starsdk-ws-1.0.0.jar /home/ws/bin/starsdk-ws-1.0.0.jar
+ADD ./ws/bin/starsdk-ws-1.0.0.jar /home/ws/bin/starsdk-ws.jar
 
 RUN chown -R ws:ws /home/ws
 
