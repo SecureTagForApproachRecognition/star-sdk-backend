@@ -1,8 +1,6 @@
 openapi: 3.0.0
 servers:
-- url: https://app-test-ws.star-app.ch
-  description: ''
-- url: https://app-prod-ws.star-app.ch
+- url: https://ws-sdk-dev.next-step.io
   description: ''
 info:
   version: 1.0-develop
@@ -68,7 +66,7 @@ paths:
       - name: dayDateStr
         in: path
         description: The date for which we want to get the SecretKey. *Important*
-          don't use dashes
+          don't use dashes.
         required: true
         schema:
           type: string

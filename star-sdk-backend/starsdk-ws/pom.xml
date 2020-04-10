@@ -98,8 +98,7 @@
                     </controllers>
                     <description>STARSDK API</description>
                     <apiUrls>
-                        <apiUrl>https://app-test-ws.star-app.ch</apiUrl>
-                        <apiUrl>https://app-prod-ws.star-app.ch</apiUrl>
+                        <apiUrl>https://ws-sdk-dev.next-step.io</apiUrl>
                     </apiUrls>
                     <title>STARSDK API</title>
                 </configuration>
