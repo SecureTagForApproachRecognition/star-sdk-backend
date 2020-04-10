@@ -102,7 +102,8 @@ components:
       properties:
         value:
           type: string
-          description: Authentication data used to verify the test result
+          description: Authentication data used to verify the test result (base64
+            encoded)
           example: TBD
     ch.ubique.starsdk.model.ExposeeRequest:
       type: object
