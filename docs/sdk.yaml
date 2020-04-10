@@ -45,6 +45,7 @@ paths:
         in: header
         description: App Identifier (PackageName/BundleIdentifier) + App-Version +
           OS (Android/iOS) + OS-Version
+        example: ch.ubique.android.starsdk;1.0;iOS;13.3
         required: true
         schema:
           type: string
@@ -67,6 +68,7 @@ paths:
         in: path
         description: The date for which we want to get the SecretKey. *Important*
           don't use dashes.
+        example: '20190131'
         required: true
         schema:
           type: string
