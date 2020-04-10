@@ -57,7 +57,13 @@
 		</dependencies>
 	</dependencyManagement>
 
-
+<repositories>
+ 	<repository>
+            <id>github</id>
+            <name>github</name>
+            <url>https://maven.pkg.github.com/Ubique-OSS/springboot-swagger3</url>
+        </repository>
+</repositories>
 	<build>
 		<plugins>
 			<plugin>
