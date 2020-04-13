@@ -66,9 +66,8 @@ paths:
       parameters:
       - name: dayDateStr
         in: path
-        description: The date for which we want to get the SecretKey. *Important*
-          don't use dashes.
-        example: '20190131'
+        description: The date for which we want to get the SecretKey.
+        example: '2019-01-31'
         required: true
         schema:
           type: string
