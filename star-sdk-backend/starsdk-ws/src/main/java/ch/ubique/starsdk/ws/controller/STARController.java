@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,11 +48,17 @@ public class STARController {
 		this.appSource = appSource;
 	}
 
+	@CrossOrigin(origins = {
+		"https://editor.swagger.io"
+	})
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public @ResponseBody String hello() {
 		return "Hello from STAR SDK WS";
 	}
 
+	@CrossOrigin(origins = {
+		"https://editor.swagger.io"
+	})
 	@RequestMapping(value = "/exposed", method = RequestMethod.POST)
 	@Documentation(
 		description = "Enpoint used to publish the SecretKey.",
@@ -80,6 +87,10 @@ public class STARController {
 			"400 => If dayDateStr has the wrong format"
 		}
 	)
+
+	@CrossOrigin(origins = {
+		"https://editor.swagger.io"
+	})
 	@RequestMapping(value = "/exposed/{dayDateStr}")
 	public @ResponseBody ResponseEntity<ExposedOverview> getExposed(@PathVariable
 	 @Documentation(description = "The date for which we want to get the SecretKey. *Important* don't use dashes.", example = "20190131") 
