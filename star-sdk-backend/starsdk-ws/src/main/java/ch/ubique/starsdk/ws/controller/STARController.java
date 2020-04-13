@@ -38,7 +38,7 @@ public class STARController {
 	private final STARDataService dataService;
 	private final String appSource;
 
-	private static final DateTimeFormatter DAY_DATE_FORMATTER = DateTimeFormat.forPattern("yyyyMMdd")
+	private static final DateTimeFormatter DAY_DATE_FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd")
 			.withZone(DateTimeZone.UTC);
 
 	private static final Logger logger = LoggerFactory.getLogger(STARController.class);
@@ -93,7 +93,7 @@ public class STARController {
 	})
 	@RequestMapping(value = "/exposed/{dayDateStr}")
 	public @ResponseBody ResponseEntity<ExposedOverview> getExposed(@PathVariable
-	 @Documentation(description = "The date for which we want to get the SecretKey. *Important* don't use dashes.", example = "20190131") 
+	 @Documentation(description = "The date for which we want to get the SecretKey.", example = "2019-01-31") 
 	 	String dayDateStr) {
 		DateTime dayDate = DAY_DATE_FORMATTER.parseDateTime(dayDateStr);
 		List<Exposee> exposeeList = dataService.getExposedForDay(dayDate);
