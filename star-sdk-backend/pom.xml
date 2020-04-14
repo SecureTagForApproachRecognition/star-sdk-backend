@@ -101,15 +101,16 @@
 
     <repositories>
         <repository>
-            <id>github-annotation</id>
-            <name>github</name>
-            <url>https://maven.pkg.github.com/Ubique-OSS/springboot-swagger3-annotations</url>
-        </repository>
-        <repository>
             <id>github</id>
             <name>github</name>
             <url>https://maven.pkg.github.com/Ubique-OSS/springboot-swagger3</url>
         </repository>
+        <repository>
+            <id>github-annotation</id>
+            <name>github</name>
+            <url>https://maven.pkg.github.com/Ubique-OSS/springboot-swagger3-annotations</url>
+        </repository>
+        
         <repository>
             <id>spring-snapshots</id>
             <name>Spring Snapshots</name>
