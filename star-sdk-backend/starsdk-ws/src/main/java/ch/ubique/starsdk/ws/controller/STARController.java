@@ -1,5 +1,6 @@
 package ch.ubique.starsdk.ws.controller;
 
+import java.time.Duration;
 import java.util.Base64;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -108,7 +110,7 @@ public class STARController {
 		if (request.checkNotModified(etag)) {
 			return null;
 		}
-		return ResponseEntity.ok(overview);
+		return ResponseEntity.ok().cacheControl(CacheControl.maxAge(Duration.ofMinutes(5))).body(overview);
 	}
 
 	@ExceptionHandler(IllegalArgumentException.class)
