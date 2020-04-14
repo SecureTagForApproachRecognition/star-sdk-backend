@@ -12,6 +12,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import ch.ubique.starsdk.data.EtagGenerator;
+import ch.ubique.starsdk.data.EtagGeneratorInterface;
 import ch.ubique.starsdk.data.JDBCSTARDataServiceImpl;
 import ch.ubique.starsdk.data.STARDataService;
 import ch.ubique.starsdk.ws.controller.STARController;
@@ -33,7 +35,7 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
 	
 	@Bean
 	public STARController starSDKController() {
-		return new STARController(starSDKDataService(), appSource);
+		return new STARController(starSDKDataService(), etagGenerator(), appSource);
 	}
 	
 
@@ -42,4 +44,8 @@ public abstract class WSBaseConfig implements SchedulingConfigurer, WebMvcConfig
 		return new JDBCSTARDataServiceImpl(getDbType(), dataSource());
 	}
 
+	@Bean
+	public EtagGeneratorInterface etagGenerator() {
+		return new EtagGenerator();
+	}
 }

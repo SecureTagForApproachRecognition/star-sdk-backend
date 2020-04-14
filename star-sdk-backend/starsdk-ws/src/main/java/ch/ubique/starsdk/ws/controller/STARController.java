@@ -23,8 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.context.request.WebRequest;
 
 import ch.ubique.openapi.docannotations.Documentation;
+import ch.ubique.starsdk.data.EtagGenerator;
+import ch.ubique.starsdk.data.EtagGeneratorInterface;
 import ch.ubique.starsdk.data.STARDataService;
 import ch.ubique.starsdk.model.ExposedOverview;
 import ch.ubique.starsdk.model.Exposee;
@@ -36,6 +39,7 @@ import ch.ubique.starsdk.model.ExposeeRequest;
 public class STARController {
 
 	private final STARDataService dataService;
+	private final EtagGeneratorInterface etagGenerator;
 	private final String appSource;
 
 	private static final DateTimeFormatter DAY_DATE_FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd")
@@ -43,9 +47,10 @@ public class STARController {
 
 	private static final Logger logger = LoggerFactory.getLogger(STARController.class);
 
-	public STARController(STARDataService dataService, String appSource) {
+	public STARController(STARDataService dataService, EtagGeneratorInterface etagGenerator, String appSource) {
 		this.dataService = dataService;
 		this.appSource = appSource;
+		this.etagGenerator = etagGenerator;
 	}
 
 	@CrossOrigin(origins = {
@@ -94,10 +99,15 @@ public class STARController {
 	@RequestMapping(value = "/exposed/{dayDateStr}")
 	public @ResponseBody ResponseEntity<ExposedOverview> getExposed(@PathVariable
 	 @Documentation(description = "The date for which we want to get the SecretKey.", example = "2019-01-31") 
-	 	String dayDateStr) {
+	 	String dayDateStr, WebRequest request) {
 		DateTime dayDate = DAY_DATE_FORMATTER.parseDateTime(dayDateStr);
 		List<Exposee> exposeeList = dataService.getExposedForDay(dayDate);
+		int max = exposeeList.stream().map(e -> e.getId()).max(Integer::compareTo).get();
 		ExposedOverview overview = new ExposedOverview(exposeeList);
+		String etag = etagGenerator.getEtag(max);
+		if (request.checkNotModified(etag)) {
+			return null;
+		}
 		return ResponseEntity.ok(overview);
 	}
 
