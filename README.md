@@ -11,7 +11,7 @@ This repository contains a backend implementation (webservice) written with Spri
 ## Database
 For development purposes an hsqldb can be used to run the webservice locally. For production systems we recommend connecting to a PostgreSQL dabatase (cluster if possible).
 
-The backend specification is documented [here](https://securetagforapproachrecognition.github.io/star-sdk-backend/).
+The backend API documentation is [here](https://securetagforapproachrecognition.github.io/star-sdk-backend/).
 
 ## Build
 To build you need to install Maven.
@@ -25,10 +25,10 @@ mvn install
 java -jar starsdk-ws-*.jar
 ```
 ## Dockerfiles
-We split the pure SDK implementation from app specific (vendor-specific) implementation. Therefore we use two services, both of which run as docker containers. The dockerfile includes a base jdk image to run the jar. To actually build the docker container, you need to place the generated jar in the bin folder.
+The dockerfile includes a base jdk image to run the jar. To actually build the docker container, you need to place the generated jar in the bin folder.
 
 ```bash
-cp star-sdk-backend/starsdk-ws/target/starsdk-ws-1.0.0-SNAPSHOT.jar ws-sdk/ws/bin/starsdk-ws-1.0.0.jar
+cp dpppt-sdk-backend/dpppt-sdk-backend-ws/target/dpppt-sdk-backends-1.0.0-SNAPSHOT.jar ws-sdk/ws/bin/dpppt-sdk-backend-ws-1.0.0.jar
 ```
 
 ```bash
@@ -39,8 +39,8 @@ cd ws-sdk && docker build -t <the-tag-we-use> .
 docker run <the-tag-we-use>
  ```
 
-## Documentation
-To build the documentation install `rusty-swagger` via `cargo`:
+## API Documentation
+To build the API documentation install `rusty-swagger` via `cargo`:
 ```bash
 cargo install rusty-swagger
 ```
