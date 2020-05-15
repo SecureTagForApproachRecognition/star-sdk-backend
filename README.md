@@ -1,4 +1,10 @@
 # STAR SDK Backend
+
+> #### Moved to DP-3T!
+> 
+> As of May 2020, all of our efforts are transitioning to [DP-3T](https://github.com/DP-3T).
+> 
+
 ![Java CI with Maven](https://github.com/SecureTagForApproachRecognition/star-sdk-backend/workflows/Java%20CI%20with%20Maven/badge.svg?branch=master)
 ## Introduction
 This repository contains a backend implementation (webservice) written with Spring Boot, that implements the specification of the Decentralized Privacy-Preserving Proximity Tracing system.
